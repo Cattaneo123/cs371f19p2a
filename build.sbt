@@ -8,8 +8,10 @@ scalacOptions ++= Seq("-deprecation", "-feature", "-unchecked")
 
 libraryDependencies ++= Seq(
   "org.scalatest"     %% "scalatest"  % "3.0.5"  % Test,
-  "com.storm-enroute" %% "scalameter" % "0.10.1" % Test
+  "com.storm-enroute" %% "scalameter" % "0.10.1" % Test,
 )
+
+libraryDependencies += "org.apache.commons" % "commons-collections4" % "4.4"
 
 testFrameworks += new TestFramework("org.scalameter.ScalaMeterFramework")
 
