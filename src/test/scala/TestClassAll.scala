@@ -48,19 +48,44 @@ class TestClassAll extends FunSuite {
 
     }
   }
-  
+
   def testIterator(description: String) = {
     test(description) {
-      val iterator = scala.io.Source.fromFile("testingFileOne").getLines
+      val iterator = Iterator("a", "b", "c", "d")
       val words = iterator.flatMap(_.split("(?U)[^\\p{Alpha}0-9']+"))
-
+      assert(iterator.hasNext === true)
+      iterator.next()
+      iterator.next()
+      iterator.next()
+      iterator.next()
+      assert(iterator.hasNext === false)
     }
   }
-  
+
+  def testSlidingWindowNonempty(description: String) {
+    test(description) {
+      val window: WindowMaker = new WindowMaker(5, 1, 4, 1);
+      val iterator = Iterator("aaa", "bb", "c", "ddddd", "ee", "fff", "gg", "ee", "qqq")
+      val words = iterator.flatMap(_.split("(?U)[^\\p{Alpha}0-9']+"))
+      var checkedOutput = new ListMap[String, Int]
+      val outputToList: Output = new Output() {
+        override def update(value: Queue[String]): Unit = {
+          val thingMap = value.groupBy(identity).mapValues(_.size)
+          val sortedThingMap = ListMap(thingMap.toSeq.sortWith(_._2 < _._2): _*)
+          checkedOutput = sortedThingMap
+        }
+      }
+      assert(checkedOutput.size === 0)
+      window.slidingWindow(words, outputToList)
+      assert(checkedOutput.size === 4)
+    }
+  }
 
   testQueueEmpty("Checks whether it initates as empty")
   testSortMapSize("Checks whether the map is being made properly")
   testSortMap("Test whether the map gets sorted")
   testQueueSize("Tests whether or not size is maintained", 10)
+  testIterator("Tests whether the iterator knows what to do with no input")
+  testSlidingWindowNonempty("Tests the sliding window")
 }
 
