@@ -6,6 +6,7 @@ class WindowMaker(queueSize: Int, wordSize: Int, mapSize: Int, printCounter: Int
   var queue: Queue[String] = Queue.empty[String]
   val maxSize: Int = queueSize
   var counter: Int = 0
+  var memCounter: Int = 0
 
   def slidingWindow(input: Iterator[String], output: Output): Unit = {
     while (input.hasNext) {
@@ -23,6 +24,18 @@ class WindowMaker(queueSize: Int, wordSize: Int, mapSize: Int, printCounter: Int
       if (counter > printCounter) {
         output.update(queue)
         counter = 0
+      }
+
+      //outputs memory usage every 100 words since we don't actually have a logger easily available.
+      memCounter = memCounter + 1
+      if (memCounter > 100) {
+        val mb = 1024 * 1024
+        val runtime = Runtime.getRuntime
+        print("** Used Memory:  " + (runtime.totalMemory - runtime.freeMemory) / mb)
+        print(", " + "** Free Memory:  " + runtime.freeMemory / mb)
+        print(", " + "** Total Memory: " + runtime.totalMemory / mb)
+        print(", " + "** Max Memory:   " + runtime.maxMemory / mb)
+        memCounter = 0
       }
 
     }
