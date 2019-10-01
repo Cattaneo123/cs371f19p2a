@@ -18,5 +18,3 @@ testFrameworks += new TestFramework("org.scalameter.ScalaMeterFramework")
 logBuffered := false
 
 parallelExecution in Test := false
-
-enablePlugins(JavaAppPackaging)
