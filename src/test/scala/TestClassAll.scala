@@ -48,6 +48,15 @@ class TestClassAll extends FunSuite {
 
     }
   }
+  
+  def testIterator(description: String) = {
+    test(description) {
+      val iterator = scala.io.Source.fromFile("testingFileOne").getLines
+      val words = iterator.flatMap(_.split("(?U)[^\\p{Alpha}0-9']+"))
+
+    }
+  }
+  
 
   testQueueEmpty("Checks whether it initates as empty")
   testSortMapSize("Checks whether the map is being made properly")
