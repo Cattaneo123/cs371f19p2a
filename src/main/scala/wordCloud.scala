@@ -31,10 +31,10 @@ class WindowMaker(queueSize: Int, wordSize: Int, mapSize: Int, printCounter: Int
       if (memCounter > 100) {
         val mb = 1024 * 1024
         val runtime = Runtime.getRuntime
-        print("** Used Memory:  " + (runtime.totalMemory - runtime.freeMemory) / mb)
-        print(", " + "** Free Memory:  " + runtime.freeMemory / mb)
-        print(", " + "** Total Memory: " + runtime.totalMemory / mb)
-        print(", " + "** Max Memory:   " + runtime.maxMemory / mb)
+        Console.err.print("** Used Memory:  " + (runtime.totalMemory - runtime.freeMemory) / mb)
+        Console.err.print(", " + "** Free Memory:  " + runtime.freeMemory / mb)
+        Console.err.print(", " + "** Total Memory: " + runtime.totalMemory / mb)
+        Console.err.print(", " + "** Max Memory:   " + runtime.maxMemory / mb)
         memCounter = 0
       }
 
