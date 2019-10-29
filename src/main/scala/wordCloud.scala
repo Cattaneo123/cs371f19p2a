@@ -2,7 +2,7 @@ import scala.collection.immutable.Queue
 import scala.collection.immutable.ListMap
 import sun.misc.Signal
 
-class WindowMaker(queueSize: Int, wordSize: Int, mapSize: Int, printCounter: Int) {
+class WindowMaker(mapSize: Int, wordSize: Int, queueSize: Int, printCounter: Int) {
   var queue: Queue[String] = Queue.empty[String]
   val maxSize: Int = queueSize
   var counter: Int = 0
@@ -31,10 +31,12 @@ class WindowMaker(queueSize: Int, wordSize: Int, mapSize: Int, printCounter: Int
       if (memCounter > 100) {
         val mb = 1024 * 1024
         val runtime = Runtime.getRuntime
+        println()
         Console.err.print("** Used Memory:  " + (runtime.totalMemory - runtime.freeMemory) / mb)
         Console.err.print(", " + "** Free Memory:  " + runtime.freeMemory / mb)
         Console.err.print(", " + "** Total Memory: " + runtime.totalMemory / mb)
         Console.err.print(", " + "** Max Memory:   " + runtime.maxMemory / mb)
+        println()
         memCounter = 0
       }
 
@@ -81,8 +83,8 @@ object Main {
       }
       wordSize = args(1).toInt
 
-      if (args(2).toInt > args(0).toInt) {
-        throw new NumberFormatException("Value for arg 3 cannot be larger than value for arg 1");
+      if (args(2).toInt < args(0).toInt) {
+        throw new NumberFormatException("Value for arg 3 cannot be smaller than value for arg 1");
       }
       queueSize = args(2).toInt
     } else if (args.length == 4) {
@@ -96,8 +98,8 @@ object Main {
       }
       wordSize = args(1).toInt
 
-      if (args(2).toInt > args(0).toInt) {
-        throw new NumberFormatException("Value for arg 3 cannot be larger than value for arg 1");
+      if (args(2).toInt < args(0).toInt) {
+        throw new NumberFormatException("Value for arg 3 cannot be smaller than value for arg 1");
       }
       queueSize = args(2).toInt
 
