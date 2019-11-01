@@ -31,12 +31,12 @@ class WindowMaker(mapSize: Int, wordSize: Int, queueSize: Int, printCounter: Int
       if (memCounter > 100) {
         val mb = 1024 * 1024
         val runtime = Runtime.getRuntime
-        println()
+        println("")
         Console.err.print("** Used Memory:  " + (runtime.totalMemory - runtime.freeMemory) / mb)
         Console.err.print(", " + "** Free Memory:  " + runtime.freeMemory / mb)
         Console.err.print(", " + "** Total Memory: " + runtime.totalMemory / mb)
         Console.err.print(", " + "** Max Memory:   " + runtime.maxMemory / mb)
-        println()
+        println("")
         memCounter = 0
       }
 
@@ -119,7 +119,7 @@ object Main {
     val printToCommandLine: Output = new Output() {
       override def update(value: Queue[String]): Unit = {
         val thingMap = value.groupBy(identity).mapValues(_.size)
-        val sortedThingMap = ListMap(thingMap.toSeq.sortWith(_._2 < _._2): _*)
+        val sortedThingMap = ListMap(thingMap.toSeq.sortWith(_._2 > _._2): _*)
         val properThingMap = sortedThingMap.drop(sortedThingMap.size - mapSize)
         println()
         println("Map of the numbers")
