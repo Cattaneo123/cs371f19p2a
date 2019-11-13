@@ -48,7 +48,7 @@ class TestClassAll extends FunSuite {
 
     }
   }
-  
+
   def testIterator(description: String) = {
     test(description) {
       val iterator = scala.io.Source.fromFile("testingFileOne").getLines
@@ -56,9 +56,8 @@ class TestClassAll extends FunSuite {
 
     }
   }
-  
 
-  def testIterator(description: String) = {
+  def testIteratorMovement(description: String) = {
     test(description) {
       val iterator = Iterator("a", "b", "c", "d")
       val words = iterator.flatMap(_.split("(?U)[^\\p{Alpha}0-9']+"))
@@ -86,7 +85,7 @@ class TestClassAll extends FunSuite {
       }
       assert(checkedOutput.size === 0)
       window.slidingWindow(words, outputToList)
-      assert(checkedOutput.size === 4)
+      assert(checkedOutput.size === 3)
     }
   }
 
@@ -94,7 +93,7 @@ class TestClassAll extends FunSuite {
   testSortMapSize("Checks whether the map is being made properly")
   testSortMap("Test whether the map gets sorted")
   testQueueSize("Tests whether or not size is maintained", 10)
-  testIterator("Tests whether the iterator knows what to do with no input")
+  testIteratorMovement("Tests whether the iterator knows what to do with no input")
   testSlidingWindowNonempty("Tests the sliding window")
 }
 
