@@ -93,7 +93,7 @@ class TestClassAll extends FunSuite {
   testSortMapSize("Checks whether the map is being made properly")
   testSortMap("Test whether the map gets sorted")
   testQueueSize("Tests whether or not size is maintained", 10)
-  testIteratorMovement("Tests whether the iterator knows what to do with no input")
+  testIteratorMovement("Tests whether the iterator can move through words")
   testSlidingWindowNonempty("Tests the sliding window")
 }
 

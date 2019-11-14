@@ -16,7 +16,7 @@ class WindowMaker(mapSize: Int, wordSize: Int, queueSize: Int, printCounter: Int
       if ((word.length() >= wordSize) && (word != "")) {
         queue = queue.enqueue(word.toLowerCase())
       }
-      if (queue.length > maxSize) {
+      if (queue.size > maxSize) {
         var dumped = queue.dequeue
         queue = dumped._2
       }
@@ -115,15 +115,16 @@ object Main {
     val iterator = scala.io.Source.stdin.getLines
     val words = iterator.flatMap(_.split("(?U)[^\\p{Alpha}0-9']+"))
 
-    val window: WindowMaker = new WindowMaker(queueSize, wordSize, mapSize, printTimer)
+    val window: WindowMaker = new WindowMaker(mapSize, wordSize, queueSize, printTimer)
     val printToCommandLine: Output = new Output() {
       override def update(value: Queue[String]): Unit = {
-        val thingMap = value.groupBy(identity).mapValues(_.size)
-        val sortedThingMap = ListMap(thingMap.toSeq.sortWith(_._2 > _._2): _*)
-        val properThingMap = sortedThingMap.drop(sortedThingMap.size - mapSize)
-        println()
-        println("Map of the numbers")
-        sortedThingMap.foreach { println }
+        val thingMap = value.groupBy(identity).mapValues(_.size).toSeq.sortWith(_._2 > _._2).take(mapSize)
+
+        if (value.size >= mapSize) {
+          println()
+          println("Map of the numbers")
+          thingMap.foreach { println }
+        }
       }
     }
     window.slidingWindow(words, printToCommandLine)
